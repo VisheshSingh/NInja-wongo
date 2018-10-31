@@ -16,12 +16,6 @@ const pie = d3
   .sort(null)
   .value(d => d.cost);
 
-const angles = pie([
-  { name: "rent", cost: 500 },
-  { name: "food", cost: 300 },
-  { name: "gaming", cost: 200 }
-]);
-
 const arcPath = d3
   .arc()
   .outerRadius(dims.radius)
@@ -29,7 +23,16 @@ const arcPath = d3
 
 // update function
 const update = data => {
-  console.log(data);
+  // join enhanced (pie) data to path elements
+  const paths = graph.selectAll("path").data(pie(data));
+
+  paths
+    .enter()
+    .append("path")
+    .attr("class", "arc")
+    .attr("d", arcPath)
+    .attr("stroke", "#fff")
+    .attr("stroke-width", 3);
 };
 // data array
 var data = [];
