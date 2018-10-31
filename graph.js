@@ -74,6 +74,12 @@ const update = data => {
     .transition()
     .duration(700)
     .attrTween("d", arcTweenEnter);
+
+  // add events
+  graph
+    .selectAll("path")
+    .on("mouseover", handleMouseOver)
+    .on("mouseout", handleMouseOut);
 };
 // data array
 var data = [];
@@ -131,3 +137,18 @@ function arcTweenUpdate(d) {
     return arcPath(i(t));
   };
 }
+
+// event listeners
+const handleMouseOver = (d, i, n) => {
+  d3.select(n[i])
+    .transition()
+    .duration(300)
+    .attr("fill", "#fff");
+};
+
+const handleMouseOut = (d, i, n) => {
+  d3.select(n[i])
+    .transition()
+    .duration(300)
+    .attr("fill", color(d.data.name));
+};
